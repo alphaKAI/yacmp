@@ -71,7 +71,8 @@ void musicPlay(string fileName) {
   PaStream* stream;
   PaError error;
   PaStreamParameters outputParameters;
-PlayData* data = new PlayData;
+  PlayData* data = new PlayData;
+  
   data.position = resume ? position : 0;
   data.sfInfo.format = 0;
   data.sndFile = sf_open(fileName.toStringz, SFM_READ, &data.sfInfo);
