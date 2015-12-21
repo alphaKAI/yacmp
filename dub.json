@@ -1,0 +1,12 @@
+{
+	"name": "yacmp",
+	"description": "Yet Another Console Music Player",
+	"copyright": "Copyright © 2015, alphakai",
+	"authors": ["alphakai"],
+  "libs":["portaudio"],
+  "license":"MIT",
+	"sourceFiles":["source/app.d", "source/deimos/portaudio.di"],
+  "dependencies": {
+    "derelict_extras-sndfile":"~master"
+	}
+}
