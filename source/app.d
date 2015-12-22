@@ -104,13 +104,12 @@ void musicPlay(string fileName) {
   error = Pa_OpenStream(
       &stream,
       null,
-      cast(const(PaStreamParameters*))&outputParameters,
-      cast(double)data.sfInfo.samplerate,
-      cast(ulong)paFramesPerBufferUnspecified,
+      &outputParameters,
+      data.sfInfo.samplerate,
+      paFramesPerBufferUnspecified,
       paNoFlag,
       &Callback,
-      cast(void*)data
-      );
+      data);
 
   if(error){
     writeln("error opening output, error code = ", error);
