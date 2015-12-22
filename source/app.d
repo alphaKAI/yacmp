@@ -44,6 +44,11 @@ extern(C) int Callback(
   cursor = _out;
 
   while(thisSize > 0){
+    if(!firstTime && data.position == 0)
+      playing = false;    
+    if(firstTime)
+      firstTime = false;
+
     sf_seek(data.sndFile, data.position, SEEK_SET);
 
     if(thisSize > (data.sfInfo.frames - data.position)){
@@ -65,8 +70,11 @@ extern(C) int Callback(
 shared static bool playing;
 shared static bool resume;
 shared static int position;
+shared static bool firstTime;
 
 void musicPlay(string fileName) {
+
+  firstTime = true;
 
   PaStream* stream;
   PaError error;
@@ -76,9 +84,10 @@ void musicPlay(string fileName) {
   data.position = resume ? position : 0;
   data.sfInfo.format = 0;
   data.sndFile = sf_open(fileName.toStringz, SFM_READ, &data.sfInfo);
-
+  
   if(!data.sndFile){
     writeln("error opening file\n");
+    playing = false;
     return;
   }
 
@@ -113,8 +122,10 @@ void musicPlay(string fileName) {
   Pa_StartStream(stream);
   while(true){
     Thread.sleep(dur!"msecs"(100));
-    if(!playing)
+    if(!playing){
+      writeln("STOP");
       break;
+    }
   }
 
   Pa_StopStream(stream);
